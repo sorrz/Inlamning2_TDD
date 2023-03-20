@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Inlamning2_TDD.Repository
 {
-    
+
     public class productRepository : IProductRepository
     {
         private readonly string filePath = "hejsan.txt";
@@ -22,10 +22,21 @@ namespace Inlamning2_TDD.Repository
 
         public Task AddProduct(ProductModel product)
         {
-            _products.Add(product);
-            
-            File.WriteAllLines(filePath, _products);
+            if (!DoesProductexist(product)) _products.Add(product);
+            else
+            {
+                GetProductById(product.Id).IncreaseCount(product.Count);
+            }
+
+            SaveProductList();
             return Task.CompletedTask;
+        }
+
+        private void SaveProductList()
+        {
+            var result = new List<string>();
+            foreach (ProductModel prod in _products) result.Add(SerializeProduct(prod));
+            File.WriteAllLines(filePath, result.ToArray());
         }
 
         public ProductModel GetProductById(int id)
@@ -34,38 +45,32 @@ namespace Inlamning2_TDD.Repository
             {
                 if (prod.Id == id) return prod;
             }
-
             return null;
         }
 
         public List<ProductModel> GetProducts()
         {
-
-
-            // Build a IF check for the ID,
-            // if Id matches then + the count, ignore the other parameters.
-
-
             var _list = File.ReadAllLines(filePath).ToList();
             var products = DeserializeProductList(_list);
-           
-            
             return products;
         }
 
         public Task UpdateProduct(ProductModel product)
         {
-
-            // Find the ID
-            // Replace the parameter that is notEqual with the new value
-            // Save the List and Write to File
-
-            throw new NotImplementedException();
+            if (!DoesProductexist(product)) _products.Add(product);
+            else
+            {
+                GetProductById(product.Id)
+                    .UpdateProductInfo(product.Name, product.Count, product.BasePrice);
+            }
+            SaveProductList();
+            return Task.CompletedTask;
         }
 
-        public void SerializeProduct(ProductModel product)
+        public string SerializeProduct(ProductModel product)
         {
-            throw new NotImplementedException();
+            return $"{product.Id},{product.Name},{product.Count},{product.BasePrice}";
+
         }
 
         public List<ProductModel> DeserializeProductList(List<string> _list)
@@ -79,10 +84,15 @@ namespace Inlamning2_TDD.Repository
                     i[1],
                     Convert.ToInt32(i[2]),
                     Convert.ToDouble(i[3])
-                    ); ;
+                    );
                 products.Add(x);
             }
             return products;
+        }
+
+        private bool DoesProductexist(ProductModel product)
+        {
+            return _products.Exists(p => p.Id == product.Id);
         }
 
 

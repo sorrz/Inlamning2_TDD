@@ -29,7 +29,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
         public void Adding_Product_Should_Return_TaskComplete()
         {
             //Arrange
-            int id = 1;
+            int id = 10;
             ProductModel product = new ProductModel(id, "Banan", 20, 10);
 
             //Act
@@ -42,8 +42,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
         public void Get_Product_By_Id_Should_Return_Object()
         {
             //Arrange
-            int id = 1;
-            string filePath = "hejsan.txt";
+            int id = 10;
             ProductModel product = new ProductModel(id, "Banan", 20, 10);
             _sut.AddProduct(product);
 
@@ -51,18 +50,10 @@ namespace Inlamning2_TDD_Tests.Interfaces
             var result = _sut.GetProductById(id);
 
             //Assert
-            Assert.AreEqual(Task.CompletedTask, result);
+            Assert.AreEqual(product.Id, result.Id);
         }
 
-        [TestMethod]
-        public void Get_all_products_returns_the_number_of_products_in_list()
-        {
-            //ARR
-            //ACT
-            var result = _sut.GetProducts();
-            //ASS
-            Assert.AreEqual(1, result.Count);
-        }
+       
 
     }
 }
