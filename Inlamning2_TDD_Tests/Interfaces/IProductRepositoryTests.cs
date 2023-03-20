@@ -14,30 +14,54 @@ namespace Inlamning2_TDD_Tests.Interfaces
     public class IProductRepositoryTests
     {
         private productRepository _sut;
-        private Mock<IProductRepository> _repository;
-        private Mock<ICampaignRepository> _campRepo;
+        private Mock<IProductRepository> _repositoryMock;
+        private Mock<ICampaignRepository> _campRepoMock;
 
         public IProductRepositoryTests()
         {
-            _campRepo = new Mock<ICampaignRepository> ();
-            _repository = new Mock<IProductRepository>();
+            _campRepoMock = new Mock<ICampaignRepository> ();
+            _repositoryMock = new Mock<IProductRepository>();
             _sut = new productRepository();
         }
 
 
         [TestMethod]
-        public void IProductRepository_AddProduct()
+        public void Adding_Product_Should_Return_TaskComplete()
+        {
+            //Arrange
+            int id = 1;
+            ProductModel product = new ProductModel(id, "Banan", 20, 10);
+
+            //Act
+            var result = _sut.AddProduct(product);
+
+            //Assert
+            Assert.AreEqual(Task.CompletedTask, result);
+        }
+        [TestMethod]
+        public void Get_Product_By_Id_Should_Return_Object()
         {
             //Arrange
             int id = 1;
             string filePath = "hejsan.txt";
-            ProductModel product = new ProductModel(_campRepo.Object, id, "Banan", 20, 10, 10);
+            ProductModel product = new ProductModel(id, "Banan", 20, 10);
+            _sut.AddProduct(product);
 
             //Act
-            var result = _sut.AddProduct(filePath, product);
+            var result = _sut.GetProductById(id);
 
             //Assert
             Assert.AreEqual(Task.CompletedTask, result);
+        }
+
+        [TestMethod]
+        public void Get_all_products_returns_the_number_of_products_in_list()
+        {
+            //ARR
+            //ACT
+            var result = _sut.GetProducts();
+            //ASS
+            Assert.AreEqual(1, result.Count);
         }
 
     }

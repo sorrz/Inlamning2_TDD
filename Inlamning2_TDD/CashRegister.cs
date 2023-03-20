@@ -1,5 +1,8 @@
-﻿internal class CashRegister
+﻿using System.Runtime.CompilerServices;
+
+internal class CashRegister
 {
+    
     public CashRegister()
     {
     }

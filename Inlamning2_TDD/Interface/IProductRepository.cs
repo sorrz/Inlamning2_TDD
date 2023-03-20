@@ -10,10 +10,10 @@ namespace Inlamning2_TDD.Interface
     public interface IProductRepository
     {
         
-        Task AddProduct(string filePath, ProductModel product);
-        Task<ProductModel> GetProductByEanId(string filePath, string eanId);
-        Task<IEnumerable<ProductModel>> GetProducts(string filePath);
-        Task<ProductModel> GetProductById(string filePath, string id);
-        Task UpdateProduct(string filePath, ProductModel entity);
+        Task AddProduct(ProductModel product);
+        List<ProductModel> GetProducts();
+        ProductModel GetProductById(int id);
+        Task UpdateProduct(ProductModel product);
+
     }
 }

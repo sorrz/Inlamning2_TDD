@@ -1,36 +1,36 @@
 ﻿using Inlamning2_TDD.Interface;
+using Inlamning2_TDD.Repository;
 using System.Xml;
 
 namespace Inlamning2_TDD.Models
 {
     public class ProductModel
     {
-        private object campaignRepository;
+        private ICampaignRepository campaignRepository;
 
-        private int Id { get;}
+        public int Id { get; } 
         private string? Name { get; set; }
         private int Count { get; set; }
         private double BasePrice { get; set; }
         private double Price { get; set; } = 0;
 
-        public ProductModel()
-        {
-            Id = getId();
-            Name = Name;
-            Count = Count;
-            BasePrice = BasePrice;
-            Price = GetBestPrice();
-            campaignRepository = new();
-        }
+        //public ProductModel()
+        //{
+        //    Id = getId();
+        //    Name = Name;
+        //    Count = Count;
+        //    BasePrice = BasePrice;
+        //    Price = GetBestPrice();
+        //    campaignRepository = new campaignRepository();
+        //}
 
-        public ProductModel(object campaignRepository, int id, string? name, int count, double basePrice, double price)
+        public ProductModel(int id, string? name, int count, double basePrice)
         {
-            this.campaignRepository = campaignRepository;
             Id = id;
             Name = name;
             Count = count;
             BasePrice = basePrice;
-            Price = price;
+            //Price= GetBestPrice();
         }
 
         private double GetBestPrice()
