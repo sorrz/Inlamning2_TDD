@@ -1,15 +1,61 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.ComponentModel.Design;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
-internal class CashRegister
+public class cashRegister
 {
     private Order order;
-    public CashRegister()
+    private Receipt receipt;
+    private Handler handler;
+    private Interactions interactions;
+
+    public enum ErrorMessageEnum
     {
+        WrongCommand, 
+        InvalidInput,
+        Ok
+    }
+    public cashRegister()
+    {
+        handler = new Handler();
+        receipt = new Receipt();
         order = new Order();
+        interactions= new Interactions();
     }
 
+    internal void NewOrder()
+    {
+        while (true)
+        {
+            var userCommand = Interactions.OrderPrompt();
+            var validatedCommand = ValidateCommand(userCommand);
+            if (validatedCommand.Item2 == 0 ) handler.ErrorPrinter(ErrorMessageEnum.WrongCommand);
+            if (validatedCommand.Item2 == 1) handler.ErrorPrinter(ErrorMessageEnum.InvalidInput);
+            order.AddOrderRow(validatedCommand.Item1, validatedCommand.Item2);
+        }
+    }
+
+    private static Tuple<int, int> ValidateCommand(string[] userCommand)
+    {
+        // Hur gör vi detta? OSCAR 
+        if (userCommand.Length == 0) return Tuple.Create(0, 0);
+        if (userCommand.Length == 1) return Tuple.Create(0, 1);
+        
+        int id;
+        int count;
+        var c1 = userCommand[0].ToString();
+        var c2 = userCommand[1].ToString();
+        int.TryParse(c1, out id);
+        int.TryParse(c2, out count);
+
+        return Tuple.Create(id, count);
+    }
+
+    // Catch Method to Navigate User to the Main Menu
     public void Start()
     {
-        throw new NotImplementedException();
+        interactions.Menu();
     }
+
+
 }

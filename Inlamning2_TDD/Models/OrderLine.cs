@@ -6,13 +6,11 @@ internal class OrderLine
 {
     private IProductRepository productRepository;
 
-    public Guid OrderId { get; set; }
     public int ProductId { get; private set; }
     public double Cost { get; internal set; }
 
     public OrderLine(int id, int amount)
     {
-        OrderId = new Guid();
         ProductId = GetProducId(id);
         productRepository = new productRepository();
         Cost = GetCostofLine(id, amount);
