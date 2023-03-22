@@ -8,19 +8,22 @@ public class CashRegister
     private Handler handler;
     private Interactions interactions;
     private ProductRepository productRepository;
+    public string[] userCommandArray;
     public CashRegister()
     {
         handler = new Handler();
         interactions = new Interactions();
         productRepository = new ProductRepository();
         order = new Order(productRepository);
+        userCommandArray = new string[2];
 
     }
 
-    internal void NewOrder()
+    public void NewOrder()
     {
         while (true)
         {
+            
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
             if (validatedCommand != ErrorMessageEnum.Ok)
@@ -28,16 +31,16 @@ public class CashRegister
                 Handler.ErrorPrinter(validatedCommand);
                 continue;
             }
-            AddOrderItem(userCommand, order);
+            AddOrderItem(userCommandArray, order);
         }
     }
 
-    private void AddOrderItem(string[] userCommand, Order order)
+    private void AddOrderItem(string[] userCommandArray, Order order)
     {
         int id;
         int count;
-        var c1 = userCommand[0].ToString();
-        var c2 = userCommand[1].ToString();
+        var c1 = userCommandArray[0].ToString();
+        var c2 = userCommandArray[1].ToString();
         int.TryParse(c1, out id);
         int.TryParse(c2, out count);
         order.AddOrderRow(id, count);
@@ -47,13 +50,15 @@ public class CashRegister
         }
     }
 
-    private ErrorMessageEnum ValidateCommand(string[] userCommand)
+    private ErrorMessageEnum ValidateCommand(string userCommand)
     {
-        if (userCommand == null) return ErrorMessageEnum.EmptyString;
-        if (userCommand.Length == 0) return ErrorMessageEnum.WrongCommand;
-        if (userCommand.Length == 1) return ErrorMessageEnum.InvalidFormat;
+        if (userCommand.ToLower() == "pay") order.Pay(order);   // TODO: Fix the PAY FUNCTION! 
+        userCommandArray = userCommand.Split(' ');
+        if (userCommandArray == null) return ErrorMessageEnum.EmptyString;
+        if (userCommandArray.Length == 0) return ErrorMessageEnum.WrongCommand;
+        if (userCommandArray.Length == 1) return ErrorMessageEnum.InvalidFormat;
 
-        if (int.TryParse(userCommand[0], out int idvalue))
+        if (int.TryParse(userCommandArray[0], out int idvalue))
         {
             productRepository.GetProductById(idvalue);
         }

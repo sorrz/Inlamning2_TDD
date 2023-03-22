@@ -18,7 +18,7 @@ public class Order
         OrderId = SetNewId();
         ReceiptDate = DateOnly.FromDateTime(DateTime.Now);
         this.productRepository = productRepository;
-        ReceiptFile = $"Receipts_{ReceiptDate}";
+        ReceiptFile = $"Receipts_{ReceiptDate}.txt";
     }
 
     private int SetNewId()
@@ -59,5 +59,15 @@ public class Order
         return sum;
     }
 
-
+    internal void Pay(Order order)
+    {
+        List<string> ReceiptLines = new();
+        ReceiptLines.Add(order.OrderId.ToString());
+        ReceiptLines.Add(order.ReceiptDate.ToString());
+        foreach (OrderLine line in lines) ReceiptLines.Add(line.ToString());
+        ReceiptLines.Add("----------------\n" +
+            "Thank your for your Purchase, come again!");
+        File.WriteAllLines(ReceiptFile, ReceiptLines, System.Text.Encoding.UTF8);
+        return;
+    }
 }

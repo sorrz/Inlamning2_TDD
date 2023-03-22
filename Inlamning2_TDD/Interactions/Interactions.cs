@@ -11,7 +11,7 @@ internal class Interactions
             return Console.ReadLine();
     }
 
-    internal static string[] OrderPrompt()
+    internal static string OrderPrompt()
     {
         Console.WriteLine("Commmands:");
         Console.WriteLine("<id> <number>");
@@ -19,11 +19,12 @@ internal class Interactions
         Console.Write("Command: ");
         var input = Console.ReadLine();
         if (string.IsNullOrEmpty(input)) return null;
-        return input.Split(' '); ;
+        return input;
     }
 
     internal static void PrintOrderRows(Order order)
     {
+        Console.WriteLine($"KVITO {order.OrderId}  {order.ReceiptDate}"); 
         double sum = 0;
         sum = order.GetTotalPrice();
         foreach (var row in order.lines) Console.WriteLine($"{row.ProductName} {row.Amount} * {row.GetSingleCost(row.ProductId)} = {row.Cost}");
