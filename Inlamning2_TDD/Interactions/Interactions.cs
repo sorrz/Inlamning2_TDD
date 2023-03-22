@@ -11,8 +11,8 @@ internal class Interactions
                 $"2. Admin Verktyg\n" +
                 $"3. Avsluta  ");
             var input = Console.ReadLine();
-            if (input == "1") CashRegister.NewOrder(ref order);
-            if (input == "2") AdminTools.Menu();  //TODO: Fix the Admin Menu
+            if (input == "1") CashRegister.NewOrder(order);
+            if (input == "2") AdminTools.Menu();  //TODO Fix the Admin Menu
             if (input == "3") Environment.Exit(0);
 
         }
@@ -27,5 +27,11 @@ internal class Interactions
         Console.Write("Command: ");
         var input = Console.ReadLine().Split(' ');
         return input;
+    }
+
+    internal static void PrintOrderRows(Order order, int count)
+    {
+        foreach (var row in order.lines) Console.WriteLine($"{row.ProductId} á {row.Cost} st = {row.GetCostofLine(row.ProductId, count)}");
+        Console.WriteLine($"Total: {order.sum}");
     }
 }

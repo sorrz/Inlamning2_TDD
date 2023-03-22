@@ -2,7 +2,7 @@
 using Inlamning2_TDD.Models;
 using Inlamning2_TDD.Repository;
 
-internal class OrderLine
+public class OrderLine
 {
     private IProductRepository productRepository;
 
@@ -11,14 +11,14 @@ internal class OrderLine
 
     public OrderLine(int id, int amount)
     {
-        ProductId = GetProducId(id);
         productRepository = new productRepository();
+        ProductId = GetProducId(id);
         Cost = GetCostofLine(id, amount);
     }
 
     private int GetProducId(int id)
     {
-        var newId = productRepository.GetProductById(id).Id;
+        var newId = productRepository.GetProductById(id).Id; // TODO Fixa Objekt Instace Fel
         return newId;
     }
 
