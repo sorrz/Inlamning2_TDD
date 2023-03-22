@@ -10,6 +10,7 @@ namespace Inlamning2_TDD.Models
     {
         WrongCommand,
         InvalidFormat,
+        EmptyString,
         Ok
     }
 }

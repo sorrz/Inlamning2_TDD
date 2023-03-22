@@ -1,20 +1,14 @@
 ﻿using Inlamning2_TDD.Interface;
 using Inlamning2_TDD.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Inlamning2_TDD.Repository
 {
 
-    public class productRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly string filePath = "hejsan.txt";
         private List<ProductModel> _products;
-        public productRepository()
+        public ProductRepository()
         {
             _products = GetProducts();
         }

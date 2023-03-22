@@ -2,36 +2,31 @@
 
 internal class Interactions
 {
-    internal static void Menu(Order order)
+    internal string MenuPrinter()
     {
-        while (true)
-        {
             Console.Clear();
             Console.WriteLine($"1. Ny Kund\n" +
                 $"2. Admin Verktyg\n" +
                 $"3. Avsluta  ");
-            var input = Console.ReadLine();
-            if (input == "1") CashRegister.NewOrder(order);
-            if (input == "2") AdminTools.Menu();  //TODO Fix the Admin Menu
-            if (input == "3") Environment.Exit(0);
-
-        }
+            return Console.ReadLine();
     }
 
     internal static string[] OrderPrompt()
     {
-        Console.WriteLine("Esc to Escpae");
         Console.WriteLine("Commmands:");
         Console.WriteLine("<id> <number>");
         Console.WriteLine("PAY");
         Console.Write("Command: ");
-        var input = Console.ReadLine().Split(' ');
-        return input;
+        var input = Console.ReadLine();
+        if (string.IsNullOrEmpty(input)) return null;
+        return input.Split(' '); ;
     }
 
-    internal static void PrintOrderRows(Order order, int count)
+    internal static void PrintOrderRows(Order order)
     {
-        foreach (var row in order.lines) Console.WriteLine($"{row.ProductId} á {row.Cost} st = {row.GetCostofLine(row.ProductId, count)}");
-        Console.WriteLine($"Total: {order.sum}");
+        double sum = 0;
+        sum = order.GetTotalPrice();
+        foreach (var row in order.lines) Console.WriteLine($"{row.ProductName} {row.Amount} * {row.GetSingleCost(row.ProductId)} = {row.Cost}");
+        Console.WriteLine($"Total: {sum}");
     }
 }

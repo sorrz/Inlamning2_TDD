@@ -1,61 +1,74 @@
 ﻿using Inlamning2_TDD.Models;
-using System.Diagnostics.CodeAnalysis;
+using Inlamning2_TDD.Repository;
+using System.Reflection.Metadata.Ecma335;
 
 public class CashRegister
 {
     private Order order;
     private Handler handler;
     private Interactions interactions;
+    private ProductRepository productRepository;
     public CashRegister()
     {
         handler = new Handler();
-        order = new Order();
-        interactions= new Interactions();
+        interactions = new Interactions();
+        productRepository = new ProductRepository();
+        order = new Order(productRepository);
+
     }
 
-    internal static void NewOrder(Order order)
+    internal void NewOrder()
     {
         while (true)
         {
-            
-            
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
-            if (validatedCommand.Item1 == 0) Handler.ErrorPrinter(ErrorMessageEnum.WrongCommand);
-            if (validatedCommand.Item2 == 0) Handler.ErrorPrinter(ErrorMessageEnum.InvalidFormat);
-            order.AddOrderRow(validatedCommand.Item1, validatedCommand.Item2);
-            var listItemCount = validatedCommand.Item2;
-            var listItemId = validatedCommand.Item1;
-            order.UpdateSum(listItemId, listItemCount);
-            if (order.lines.Count > 0)
+            if (validatedCommand != ErrorMessageEnum.Ok)
             {
-                Interactions.PrintOrderRows(order, listItemCount);
+                Handler.ErrorPrinter(validatedCommand);
+                continue;
             }
-
+            AddOrderItem(userCommand, order);
         }
     }
 
-    private static Tuple<int, int> ValidateCommand(string[] userCommand)
+    private void AddOrderItem(string[] userCommand, Order order)
     {
-        // TODO Blir detta rätt? 
-        if (userCommand.ToString == string.IsNullOrEmpty) return Tuple.Create(0, 0);
-        if (userCommand.Length == 0) return Tuple.Create(0, 0);
-        if (userCommand.Length == 1) return Tuple.Create(1, 0);
-        
         int id;
         int count;
         var c1 = userCommand[0].ToString();
         var c2 = userCommand[1].ToString();
         int.TryParse(c1, out id);
         int.TryParse(c2, out count);
-
-        return Tuple.Create(id, count);
+        order.AddOrderRow(id, count);
+        if (order.lines.Count > 0)
+        {
+            Interactions.PrintOrderRows(order);
+        }
     }
 
-    // Catch Method to Navigate User to the Main Menu
+    private ErrorMessageEnum ValidateCommand(string[] userCommand)
+    {
+        if (userCommand == null) return ErrorMessageEnum.EmptyString;
+        if (userCommand.Length == 0) return ErrorMessageEnum.WrongCommand;
+        if (userCommand.Length == 1) return ErrorMessageEnum.InvalidFormat;
+
+        if (int.TryParse(userCommand[0], out int idvalue))
+        {
+            productRepository.GetProductById(idvalue);
+        }
+        return ErrorMessageEnum.Ok;
+    }
+
     public void Start()
     {
-        Interactions.Menu(order);
+        while (true)
+        {
+            var input = interactions.MenuPrinter();
+            if (input == "1") NewOrder();
+            if (input == "2") AdminTools.Menu();  //TODO Fix the Admin Menu
+            if (input == "3") Environment.Exit(0);
+        }
     }
 
 

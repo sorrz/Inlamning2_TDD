@@ -13,7 +13,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
     [TestClass]
     public class IProductRepositoryTests
     {
-        private productRepository _sut;
+        private ProductRepository _sut;
         private Mock<IProductRepository> _repositoryMock;
         private Mock<ICampaignRepository> _campRepoMock;
 
@@ -21,7 +21,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
         {
             _campRepoMock = new Mock<ICampaignRepository> ();
             _repositoryMock = new Mock<IProductRepository>();
-            _sut = new productRepository();
+            _sut = new ProductRepository();
         }
 
 
