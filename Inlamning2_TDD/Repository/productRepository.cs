@@ -19,7 +19,6 @@ namespace Inlamning2_TDD.Repository
             _products = GetProducts();
         }
 
-
         public Task AddProduct(ProductModel product)
         {
             if (!DoesProductexist(product)) _products.Add(product);

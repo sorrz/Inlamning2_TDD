@@ -1,2 +1,2 @@
-﻿var x = new cashRegister();
+﻿var x = new CashRegister();
 x.Start();

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\Inlamning2_TDD\Inlamning2_TDD.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

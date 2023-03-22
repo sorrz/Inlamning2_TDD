@@ -2,15 +2,7 @@
 
 internal class Interactions
 {
-
-    private cashRegister cashRegister;
-    public Interactions()
-    {
-        cashRegister= new cashRegister();
-    }
-
-
-    internal void Menu()
+    internal static void Menu(Order order)
     {
         while (true)
         {
@@ -19,7 +11,7 @@ internal class Interactions
                 $"2. Admin Verktyg\n" +
                 $"3. Avsluta  ");
             var input = Console.ReadLine();
-            if (input == "1") cashRegister.NewOrder();
+            if (input == "1") CashRegister.NewOrder(ref order);
             if (input == "2") AdminTools.Menu();  //TODO: Fix the Admin Menu
             if (input == "3") Environment.Exit(0);
 

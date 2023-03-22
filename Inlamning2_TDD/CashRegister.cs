@@ -12,15 +12,15 @@ public class CashRegister
         interactions= new Interactions();
     }
 
-    internal void NewOrder()
+    internal static void NewOrder(ref Order order)
     {
         while (true)
         {
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
-            if (validatedCommand.Item2 == 0 ) handler.ErrorPrinter(Inlamning2_TDD.Models.ErrorMessageEnum.WrongCommand);
-            if (validatedCommand.Item2 == 1) handler.ErrorPrinter(ErrorMessageEnum.InvalidFormat);
-            order.AddOrderRow(validatedCommand.Item1, validatedCommand.Item2);
+            if (validatedCommand.Item2 == 0 ) Handler.ErrorPrinter(Inlamning2_TDD.Models.ErrorMessageEnum.WrongCommand);
+            if (validatedCommand.Item2 == 1) Handler.ErrorPrinter(ErrorMessageEnum.InvalidFormat);
+            if (validatedCommand.Item2 == 2) order.AddOrderRow(validatedCommand.Item1, validatedCommand.Item2);
         }
     }
 
@@ -43,7 +43,7 @@ public class CashRegister
     // Catch Method to Navigate User to the Main Menu
     public void Start()
     {
-        interactions.Menu();
+        Interactions.Menu(order);
     }
 
 
