@@ -1,24 +1,13 @@
-﻿using System.ComponentModel.Design;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
+﻿using Inlamning2_TDD.Models;
 
-public class cashRegister
+public class CashRegister
 {
     private Order order;
-    private Receipt receipt;
     private Handler handler;
     private Interactions interactions;
-
-    public enum ErrorMessageEnum
-    {
-        WrongCommand, 
-        InvalidInput,
-        Ok
-    }
-    public cashRegister()
+    public CashRegister()
     {
         handler = new Handler();
-        receipt = new Receipt();
         order = new Order();
         interactions= new Interactions();
     }
@@ -29,8 +18,8 @@ public class cashRegister
         {
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
-            if (validatedCommand.Item2 == 0 ) handler.ErrorPrinter(ErrorMessageEnum.WrongCommand);
-            if (validatedCommand.Item2 == 1) handler.ErrorPrinter(ErrorMessageEnum.InvalidInput);
+            if (validatedCommand.Item2 == 0 ) handler.ErrorPrinter(Inlamning2_TDD.Models.ErrorMessageEnum.WrongCommand);
+            if (validatedCommand.Item2 == 1) handler.ErrorPrinter(ErrorMessageEnum.InvalidFormat);
             order.AddOrderRow(validatedCommand.Item1, validatedCommand.Item2);
         }
     }

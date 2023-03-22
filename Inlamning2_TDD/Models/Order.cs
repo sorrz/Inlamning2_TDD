@@ -2,18 +2,34 @@
 
 internal class Order
 {
-    private Receipt receipt;
-    private Guid OrderId { get; set; }
+    private readonly string idFilePath = "RId.txt";
+    public int OrderId { get; private set; }
     public List<OrderLine> lines;
     public double sum = 0;
     public Order()
     {
-        OrderId = new Guid();
         lines = new List<OrderLine>();
+        OrderId = SetNewId();
     }
 
 
-    
+    private int SetNewId()
+    {
+        var newID = 0;
+        if (File.Exists(idFilePath)) 
+        {
+            var lastID = Convert.ToInt32(File.ReadAllText(idFilePath));
+            newID = lastID++;
+            File.WriteAllText(idFilePath, newID.ToString());
+            return newID;
+        } 
+        else
+        {
+            newID = 1;
+            File.WriteAllText(idFilePath, newID.ToString() ); 
+            return newID;
+        }
+    }
 
 
     internal void AddOrderRow(int item1, int item2)
