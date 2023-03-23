@@ -27,7 +27,7 @@ public class Order
         if (File.Exists(IdFilePath))
         {
             var lastID = Convert.ToInt32(File.ReadAllText(IdFilePath));
-            newID = lastID++;
+            newID = ++lastID;
             File.WriteAllText(IdFilePath, newID.ToString());
             return newID;
         }
@@ -62,12 +62,25 @@ public class Order
     internal void Pay(Order order)
     {
         List<string> ReceiptLines = new();
-        ReceiptLines.Add(order.OrderId.ToString());
-        ReceiptLines.Add(order.ReceiptDate.ToString());
-        foreach (OrderLine line in lines) ReceiptLines.Add(line.ToString());
-        ReceiptLines.Add("----------------\n" +
-            "Thank your for your Purchase, come again!");
-        File.WriteAllLines(ReceiptFile, ReceiptLines, System.Text.Encoding.UTF8);
+        ReceiptLines.Add($"Receipt No: {order.OrderId.ToString()} Added {order.ReceiptDate.ToString()}");
+        foreach (OrderLine line in lines) ReceiptLines.Add($"{line.ProductName} {line.PricePer}kr * {line.Amount} = {line.Cost}");
+        ReceiptLines.Add($"=========\n" +
+            $"{order.sum} SEK\n" +
+            "Thank your for your Purchase, come again!\n");
+        UpdateReceiptFile(ReceiptLines);
         return;
+    }
+
+    private void UpdateReceiptFile(List<string> receiptLines)
+    {
+        if (File.Exists(ReceiptFile))
+        {
+            List<string> previousEntrys = File.ReadAllLines(ReceiptFile, System.Text.Encoding.UTF8).ToList();
+            previousEntrys.AddRange(receiptLines);
+            File.WriteAllLines(ReceiptFile, previousEntrys, System.Text.Encoding.UTF8);
+        } else
+        {
+            File.WriteAllLines(ReceiptFile, receiptLines, System.Text.Encoding.UTF8);
+        }
     }
 }

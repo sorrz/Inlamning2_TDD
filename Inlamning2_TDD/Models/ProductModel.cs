@@ -1,5 +1,6 @@
 ﻿using Inlamning2_TDD.Interface;
 using Inlamning2_TDD.Repository;
+
 using System.Xml;
 
 namespace Inlamning2_TDD.Models
@@ -14,23 +15,22 @@ namespace Inlamning2_TDD.Models
         public double BasePrice { get; private set; }
         private double Price { get; set; } = 0;
 
-        //public ProductModel()
-        //{
-        //    Id = getId();
-        //    Name = Name;
-        //    Count = Count;
-        //    BasePrice = BasePrice;
-        //    Price = GetBestPrice();
-        //    campaignRepository = new campaignRepository();
-        //}
-
-        public ProductModel(int id, string? name, int count, double basePrice)
+        public PriceTypeEnum PriceType { get; private set; }
+      
+        public ProductModel(int id, string? name, int count, double basePrice, int priceType)
         {
             Id = id;
             Name = name;
             Count = count;
             BasePrice = basePrice;
+            PriceType = GetPriceType(priceType);
             //Price= GetBestPrice();
+        }
+
+        public PriceTypeEnum GetPriceType(int typeID)
+        {
+            if (typeID == 1) return PriceTypeEnum.PricePerKilogram;
+            else return PriceTypeEnum.PricePer;
         }
 
         private double GetBestPrice()

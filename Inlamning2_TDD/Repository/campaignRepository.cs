@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Inlamning2_TDD.Repository
 {
-    internal class campaignRepository : ICampaignRepository
+    internal class CampaignRepository : ICampaignRepository
     {
 
     }

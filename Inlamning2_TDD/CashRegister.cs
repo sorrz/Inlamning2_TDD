@@ -52,7 +52,11 @@ public class CashRegister
 
     private ErrorMessageEnum ValidateCommand(string userCommand)
     {
-        if (userCommand.ToLower() == "pay") order.Pay(order);   // TODO: Fix the PAY FUNCTION! 
+        if (userCommand.ToLower() == "pay") 
+        {
+            order.Pay(order);   // TODO: Fix the PAY FUNCTION! 
+            Start();
+        }
         userCommandArray = userCommand.Split(' ');
         if (userCommandArray == null) return ErrorMessageEnum.EmptyString;
         if (userCommandArray.Length == 0) return ErrorMessageEnum.WrongCommand;

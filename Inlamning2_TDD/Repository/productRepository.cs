@@ -62,8 +62,7 @@ namespace Inlamning2_TDD.Repository
 
         public string SerializeProduct(ProductModel product)
         {
-            return $"{product.Id},{product.Name},{product.Count},{product.BasePrice}";
-
+            return $"{product.Id},{product.Name},{product.Count},{product.BasePrice},{product.PriceType}";
         }
 
         public List<ProductModel> DeserializeProductList(List<string> _list)
@@ -76,7 +75,8 @@ namespace Inlamning2_TDD.Repository
                     Convert.ToInt32(i[0]),
                     i[1],
                     Convert.ToInt32(i[2]),
-                    Convert.ToDouble(i[3])
+                    Convert.ToDouble(i[3]),
+                    Convert.ToInt32(i[4])
                     );
                 products.Add(x);
             }
