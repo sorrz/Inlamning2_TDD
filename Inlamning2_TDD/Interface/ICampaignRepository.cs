@@ -4,7 +4,7 @@ namespace Inlamning2_TDD.Interface
 {
     public interface ICampaignRepository
     {
-        void CreateCampaign(ProductModel product);
+        void CreateCampaign();
         void DeleteCampaign();
         void EditCampaign(CampaignModel campaign);
         string GetFilePath();
