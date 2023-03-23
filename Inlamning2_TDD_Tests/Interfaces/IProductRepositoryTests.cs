@@ -1,23 +1,18 @@
 ﻿using Inlamning2_TDD.Interface;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Inlamning2_TDD.Repository;
 using Inlamning2_TDD.Models;
 
 namespace Inlamning2_TDD_Tests.Interfaces
 {
     [TestClass]
-    public class IProductRepositoryTests
+    public class ProductRepositoryTests
     {
         private ProductRepository _sut;
         private Mock<IProductRepository> _repositoryMock;
         private Mock<ICampaignRepository> _campRepoMock;
 
-        public IProductRepositoryTests()
+        public ProductRepositoryTests()
         {
             _campRepoMock = new Mock<ICampaignRepository> ();
             _repositoryMock = new Mock<IProductRepository>();
@@ -30,7 +25,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
         {
             //Arrange
             int id = 10;
-            ProductModel product = new ProductModel(id, "Banan", 20, 10);
+            ProductModel product = new ProductModel(id, "Banan", 20, 10, 1);
 
             //Act
             var result = _sut.AddProduct(product);
@@ -43,7 +38,7 @@ namespace Inlamning2_TDD_Tests.Interfaces
         {
             //Arrange
             int id = 10;
-            ProductModel product = new ProductModel(id, "Banan", 20, 10);
+            ProductModel product = new ProductModel(id, "Banan", 20, 10, 1);
             _sut.AddProduct(product);
 
             //Act

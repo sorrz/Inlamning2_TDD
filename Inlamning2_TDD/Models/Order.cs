@@ -18,7 +18,7 @@ public class Order
         OrderId = SetNewId();
         ReceiptDate = DateOnly.FromDateTime(DateTime.Now);
         this.productRepository = productRepository;
-        ReceiptFile = $"Receipts_{ReceiptDate}.txt";
+        ReceiptFile = $"Receipts_{ReceiptDate.ToString("yyyyMMdd")}.txt";
     }
 
     private int SetNewId()
@@ -65,7 +65,7 @@ public class Order
         ReceiptLines.Add($"Receipt No: {order.OrderId.ToString()} Added {order.ReceiptDate.ToString()}");
         foreach (OrderLine line in lines) ReceiptLines.Add($"{line.ProductName} {line.PricePer}kr * {line.Amount} = {line.Cost}");
         ReceiptLines.Add($"=========\n" +
-            $"{order.sum} SEK\n" +
+            $"Total: {order.sum} SEK\n" +
             "Thank your for your Purchase, come again!\n");
         UpdateReceiptFile(ReceiptLines);
         return;
