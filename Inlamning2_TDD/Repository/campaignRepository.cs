@@ -33,13 +33,10 @@ namespace Inlamning2_TDD.Repository
         }
 
 
-        public void CreateCampaign(ProductModel product)
+        public void CreateCampaign()
         {
-            // Get Input Needed to make a campaign Object
             var _list = Interactions.GetCampaignInput();
-            // Make the Object
             var sCampaign = DeserializeCampaignList(_list);
-            // Add it to the main List of Campaigns
             _campaigns.AddRange(sCampaign);
         }
 
@@ -62,7 +59,6 @@ namespace Inlamning2_TDD.Repository
                 );
                 campaigns.Add(x);
             }
-
             return campaigns;
         }
 
@@ -79,6 +75,15 @@ namespace Inlamning2_TDD.Repository
         public string GetFilePath()
         {
             return campPath;
+        }
+
+        public double GetCampaignPrice(ProductModel product)
+        {
+            foreach (CampaignModel campaignModel in _campaigns)
+            {
+                if (campaignModel.ProductId == product.Id) return campaignModel.Price;
+            }
+            return product.BasePrice;
         }
     }
 }

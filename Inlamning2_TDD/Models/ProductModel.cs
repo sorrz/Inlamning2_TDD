@@ -13,7 +13,8 @@ namespace Inlamning2_TDD.Models
         public string? Name { get; private set; }
         public int Count { get; private set; }
         public double BasePrice { get; private set; }
-        private double Price { get; set; } = 0;
+        public double Price { get; private set; }
+        public List<CampaignModel> Campaigns { get; private set; }
 
         public PriceTypeEnum PriceType { get; private set; }
       
@@ -24,23 +25,18 @@ namespace Inlamning2_TDD.Models
             Count = count;
             BasePrice = basePrice;
             PriceType = GetPriceType(priceType);
-            //Price= GetBestPrice();
+            Campaigns = new List<CampaignModel>();
+        }
+
+        private void GetCampaignPrice(ProductModel product)
+        {
+            Price = campaignRepository.GetCampaignPrice(product);
         }
 
         public PriceTypeEnum GetPriceType(int typeID)
         {
             if (typeID == 1) return PriceTypeEnum.PricePerKilogram;
             else return PriceTypeEnum.PricePer;
-        }
-
-        private double GetBestPrice()
-        {
-            if (campaignRepository is null)
-            {
-                throw new ArgumentNullException(nameof(campaignRepository));
-            }
-
-            throw new NotImplementedException();
         }
 
         private int getId()
