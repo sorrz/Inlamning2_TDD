@@ -3,11 +3,11 @@ using Inlamning2_TDD.Models;
 
 namespace Inlamning2_TDD.Repository
 {
-
     public class ProductRepository : IProductRepository
     {
         private readonly string filePath = "hejsan.txt";
         private List<ProductModel> _products;
+
         public ProductRepository()
         {
             _products = GetProducts();
@@ -25,6 +25,12 @@ namespace Inlamning2_TDD.Repository
             return Task.CompletedTask;
         }
 
+        public void CreateProduct(int id, string? name, int count, double basePrice, int priceType)
+        {
+            var product = new ProductModel(id, name, count, basePrice, priceType);
+            _products.Add(product);
+        }
+
         private void SaveProductList()
         {
             var result = new List<string>();
@@ -38,6 +44,7 @@ namespace Inlamning2_TDD.Repository
             {
                 if (prod.Id == id) return prod;
             }
+
             return null;
         }
 
@@ -56,6 +63,7 @@ namespace Inlamning2_TDD.Repository
                 GetProductById(product.Id)
                     .UpdateProductInfo(product.Name, product.Count, product.BasePrice);
             }
+
             SaveProductList();
             return Task.CompletedTask;
         }
@@ -77,9 +85,10 @@ namespace Inlamning2_TDD.Repository
                     Convert.ToInt32(i[2]),
                     Convert.ToDouble(i[3]),
                     Convert.ToInt32(i[4])
-                    );
+                );
                 products.Add(x);
             }
+
             return products;
         }
 
@@ -87,8 +96,5 @@ namespace Inlamning2_TDD.Repository
         {
             return _products.Exists(p => p.Id == product.Id);
         }
-
-
-
     }
 }

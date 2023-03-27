@@ -39,17 +39,18 @@ Note: Function Built, adding with AdminTools<br>
 Note: Function Built, adding with AdminTools<br>
 [x] Receipts need a Receipt No. This needs to increment with +1 for each<br>
 [x] Receipts No should be persistent.<br>
-[ ] Adding Campaigns to modify prices for a product over a set time span.<br>
+[x] Adding Campaigns to modify prices for a product over a set time span.<br>
 [ ] Add and Remove Campaigns<br>
-[ ] A Single Product can have multiple Campaigns<br>
+[x] A Single Product can have multiple Campaigns<br>
 [x] Campaign Price is the price that shows and ends up on receipt<br>
 Note: Functionality built, just need to imlement<br>
 </p>
 ### TODO! <br>
 [ ] JSON Serialize Receipts<br>
+[x] Add the AdminTool Menu
 [ ] Add the adminTool functionality<br>
 [ ] Build the Tests for ICampaign Interface<br>
 [x] Build the ICampaign<br>
 [x] Implement a CampaignRepository<br>
-[ ] Add the campaignList to either OrderRow or Product (what works best?)  (Ask Stefan Friday)<br>
+[x] Add the campaignList to either OrderRow or Product (what works best?)  (Ask Stefan Friday)<br>
 [ ] Fix Graphical resonably<br>
