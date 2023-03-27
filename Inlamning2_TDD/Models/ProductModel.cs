@@ -7,9 +7,9 @@ namespace Inlamning2_TDD.Models
 {
     public class ProductModel
     {
-        private ICampaignRepository campaignRepository;
+        private CampaignRepository campaignRepository;
 
-        public int Id { get; } 
+        public int Id { get; private set; } 
         public string? Name { get; private set; }
         public int Count { get; private set; }
         public double BasePrice { get; private set; }
@@ -20,31 +20,33 @@ namespace Inlamning2_TDD.Models
       
         public ProductModel(int id, string? name, int count, double basePrice, int priceType)
         {
+            campaignRepository = new CampaignRepository();
             Id = id;
             Name = name;
             Count = count;
             BasePrice = basePrice;
             PriceType = GetPriceType(priceType);
-            Campaigns = new List<CampaignModel>();
+            Campaigns = campaignRepository.GetCampaignsForProductById(id);
         }
-
-        private void GetCampaignPrice(ProductModel product)
+        
+        // TODO: Implement and check Functionality
+        private double GetCampaignPrice()
         {
-            Price = campaignRepository.GetCampaignPrice(product);
+            foreach (CampaignModel _camp in Campaigns)
+            {
+                if (_camp.FromDate > DateOnly.FromDateTime(DateTime.Today) &&
+                    _camp.ToDate < DateOnly.FromDateTime(DateTime.Today))
+                {
+                    if (_camp.Price < Price) return _camp.Price;
+                }
+            }
+
+            return BasePrice;
         }
 
-        public PriceTypeEnum GetPriceType(int typeID)
-        {
-            if (typeID == 1) return PriceTypeEnum.PricePerKilogram;
-            else return PriceTypeEnum.PricePer;
-        }
-
-        private int getId()
-        {
-            var id = 0;
-            return id;
-        }
-
+        public PriceTypeEnum GetPriceType(int typeID) => 
+            (typeID == 1) ? PriceTypeEnum.PricePerKilogram : PriceTypeEnum.PricePer;
+        
         public void IncreaseCount(int count)
         {
             Count += count;
@@ -56,6 +58,8 @@ namespace Inlamning2_TDD.Models
             Count = count;
             BasePrice = basePrice;
         }
+
         
+
     }
 }

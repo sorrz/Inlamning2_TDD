@@ -8,7 +8,7 @@ namespace Inlamning2_TDD.Interface
         void DeleteCampaign();
         void EditCampaign(CampaignModel campaign);
         string GetFilePath();
-        double GetCampaignPrice(ProductModel product);
+        List<CampaignModel> GetCampaignsForProductById(int id);
     }
 
 }

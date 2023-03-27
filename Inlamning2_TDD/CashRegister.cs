@@ -9,10 +9,12 @@ public class CashRegister
     private Interactions interactions;
     private ProductRepository productRepository;
     public string[] userCommandArray;
+    // private AdminTools adminTools;
     public CashRegister()
     {
         handler = new Handler();
         interactions = new Interactions();
+        // adminTools = new AdminTools();
         productRepository = new ProductRepository();
         order = new Order(productRepository);
         userCommandArray = new string[2];
@@ -75,7 +77,7 @@ public class CashRegister
         {
             var input = interactions.MenuPrinter();
             if (input == "1") NewOrder();
-            if (input == "2") AdminTools.Menu();  //TODO Fix the Admin Menu
+            if (input == "2") AdminTools.AdminMenu();
             if (input == "3") Environment.Exit(0);
         }
     }

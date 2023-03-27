@@ -10,7 +10,7 @@ namespace Inlamning2_TDD.Repository
 {
     internal class CampaignRepository : ICampaignRepository
     {
-        private static readonly string campPath = "campaigns.txt";
+        private static readonly string CampPath = "campaigns.txt";
         private List<CampaignModel> _campaigns;
 
         public CampaignRepository()
@@ -20,15 +20,14 @@ namespace Inlamning2_TDD.Repository
 
         private List<CampaignModel> GetCampaigns()
         {
-            if (File.Exists(campPath))
+            if (File.Exists(CampPath))
             {
-                var _list = File.ReadAllLines(campPath).ToList();
+                var _list = File.ReadAllLines(CampPath).ToList();
                 return DeserializeCampaignList(_list);
             }
             else
             {
-                List<CampaignModel> _campaigns = new();
-                return _campaigns;
+                return  new List<CampaignModel>();
             }
         }
 
@@ -40,9 +39,9 @@ namespace Inlamning2_TDD.Repository
             _campaigns.AddRange(sCampaign);
         }
 
-        private string SerializeCampaign(ProductModel product, CampaignModel campaign)
+        private string SerializeCampaign(CampaignModel campaign)
         {
-            return $"{product.Id}{campaign.FromDate}{campaign.ToDate}{campaign.Price}";
+            return $"{campaign.ProductId},{campaign.FromDate},{campaign.ToDate},{campaign.Price}";
         }
 
         public List<CampaignModel> DeserializeCampaignList(List<string> _list)
@@ -56,7 +55,7 @@ namespace Inlamning2_TDD.Repository
                     DateOnly.FromDateTime(Convert.ToDateTime(i[1])),
                     DateOnly.FromDateTime(Convert.ToDateTime(i[2])),
                     Convert.ToDouble(i[3])
-                );
+                    );
                 campaigns.Add(x);
             }
             return campaigns;
@@ -74,16 +73,12 @@ namespace Inlamning2_TDD.Repository
 
         public string GetFilePath()
         {
-            return campPath;
+            return CampPath;
         }
 
-        public double GetCampaignPrice(ProductModel product)
+        public List<CampaignModel> GetCampaignsForProductById(int id)
         {
-            foreach (CampaignModel campaignModel in _campaigns)
-            {
-                if (campaignModel.ProductId == product.Id) return campaignModel.Price;
-            }
-            return product.BasePrice;
+            return _campaigns.Where(x => x.ProductId == id).ToList();
         }
     }
 }
