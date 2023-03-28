@@ -1,5 +1,6 @@
 ﻿using Inlamning2_TDD.Repository;
 using System.Security.Cryptography.X509Certificates;
+using Inlamning2_TDD.Interface;
 
 public class Order
 {

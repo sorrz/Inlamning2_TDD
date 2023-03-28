@@ -6,7 +6,7 @@ namespace Inlamning2_TDD.Interface
     {
         void CreateCampaign();
         void DeleteCampaign();
-        void EditCampaign(CampaignModel campaign);
+        void EditCampaign(int campID);
         string GetFilePath();
         List<CampaignModel> GetCampaignsForProductById(int id);
     }
