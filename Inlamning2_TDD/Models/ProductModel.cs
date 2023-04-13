@@ -1,7 +1,5 @@
-﻿using Inlamning2_TDD.Interface;
-using Inlamning2_TDD.Repository;
+﻿using Inlamning2_TDD.Repository;
 
-using System.Xml;
 
 namespace Inlamning2_TDD.Models
 {
@@ -29,28 +27,25 @@ namespace Inlamning2_TDD.Models
             Campaigns = campaignRepository.GetCampaignsForProductById(id);
         }
         
-        // TODO: Implement and check Functionality
-        private double GetCampaignPrice()
+        
+        public double GetCampaignPrice()
         {
+            double currentPrice = BasePrice;
             foreach (CampaignModel _camp in Campaigns)
             {
-                if (_camp.FromDate > DateOnly.FromDateTime(DateTime.Today) &&
-                    _camp.ToDate < DateOnly.FromDateTime(DateTime.Today))
+                if (_camp.FromDate < DateOnly.FromDateTime(DateTime.Today) &&
+                    _camp.ToDate > DateOnly.FromDateTime(DateTime.Today))
                 {
-                    if (_camp.Price < Price) return _camp.Price;
+                   currentPrice = _camp.Price < BasePrice ? _camp.Price : BasePrice;
                 }
             }
-
-            return BasePrice;
+            return currentPrice;
         }
 
         public PriceTypeEnum GetPriceType(int typeID) => 
             (typeID == 1) ? PriceTypeEnum.PricePerKilogram : PriceTypeEnum.PricePer;
         
-        public void IncreaseCount(int count)
-        {
-            Count += count;
-        }
+        public void IncreaseCount(int count) => Count += count;
 
         public void UpdateProductInfo(string productName, int count, double basePrice)
         {
