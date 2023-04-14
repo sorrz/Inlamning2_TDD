@@ -1,6 +1,5 @@
 ﻿using Inlamning2_TDD.Models;
 using Inlamning2_TDD.Repository;
-using System.Reflection.Metadata.Ecma335;
 
 public class CashRegister
 {
@@ -8,24 +7,24 @@ public class CashRegister
     private Handler handler;
     private Interactions interactions;
     private ProductRepository productRepository;
+    private CampaignRepository campaignRepository;
     public string[] userCommandArray;
-    // private AdminTools adminTools;
+    private AdminTools adminTools;
     public CashRegister()
     {
         handler = new Handler();
         interactions = new Interactions();
-        // adminTools = new AdminTools();
         productRepository = new ProductRepository();
         order = new Order(productRepository);
         userCommandArray = new string[2];
-
+        campaignRepository = new CampaignRepository();
+        adminTools = new AdminTools(campaignRepository, productRepository);
     }
 
     public void NewOrder()
     {
         while (true)
         {
-            
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
             if (validatedCommand != ErrorMessageEnum.Ok)
@@ -56,7 +55,7 @@ public class CashRegister
     {
         if (userCommand.ToLower() == "pay") 
         {
-            order.Pay(order);   // TODO: Fix the PAY FUNCTION! 
+            order.Pay(order);
             Start();
         }
         userCommandArray = userCommand.Split(' ');
@@ -77,7 +76,7 @@ public class CashRegister
         {
             var input = interactions.MenuPrinter();
             if (input == "1") NewOrder();
-            if (input == "2") AdminTools.AdminMenu();
+            if (input == "2") adminTools.AdminMenu();
             if (input == "3") Environment.Exit(0);
         }
     }

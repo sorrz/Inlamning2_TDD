@@ -9,7 +9,7 @@ namespace Inlamning2_TDD.Interface
         List<ProductModel> GetProducts();
         void CreateProduct(int id, string? name, int count, double basePrice, int priceType);
         ProductModel GetProductById(int id);
-        Task UpdateProduct(ProductModel product);
+        Task UpdateProduct(int  id);
 
     }
 }
