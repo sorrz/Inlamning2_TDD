@@ -27,12 +27,10 @@ namespace Inlamning2_TDD.Models
         {
             
         }
-        // TODO: Probably Not Needed
         public int SetRequestID(ProductModel product)
         {
             return product.Id;
         }
-        // TODO: Probably Not Needed
         public double CheckForCampaign()
         {
             return 1d;
@@ -43,7 +41,6 @@ namespace Inlamning2_TDD.Models
             FromDate = newStart;
             ToDate = newEnd;
             Price = newPrice;
-
         }
     }
 }

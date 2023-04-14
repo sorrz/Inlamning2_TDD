@@ -66,7 +66,7 @@ public class Order
         ReceiptLines.Add($"=========\n" +
             $"Total: {order.sum} SEK\n" +
             "Thank your for your Purchase, come again!\n");
-        UpdateReceiptFile(ReceiptLines);  // TODO: PRINT? 
+        UpdateReceiptFile(ReceiptLines); 
         Interactions.PrintOrderRows(order);
         Thread.Sleep(2000);
         return;

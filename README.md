@@ -26,7 +26,7 @@ Kvittot sparas och avändaren kommer tillbaka till Menyn.<br>
 </p>
 ### Krav för G<br>
 <p>
-[x] Funktionalitet enligt ovan, enlig specifikation. <br>
+[x] Funktionalitet enlig specifikation. <br>
 [x] Kvittot sparas vid PAY till filen RECEIPT_yyyyMMdd.txt <br>
 med dagens datum. Hantering av flera kvitton i samma fil.<br>
 [x] Fundera ut och implementera en särskiljare. (JSON ok för Kvitton)<br>
@@ -34,9 +34,7 @@ med dagens datum. Hantering av flera kvitton i samma fil.<br>
 ### Krav för VG<br>
 <p>
 [x] AdminTool för Update/Adjust Product<br>
-Note: Function Built, adding with AdminTools<br>
 [x] Add Product<br>
-Note: Function Built, adding with AdminTools<br>
 [x] Receipts need a Receipt No. This needs to increment with +1 for each<br>
 [x] Receipts No should be persistent.<br>
 [x] Adding Campaigns to modify prices for a product over a set time span.<br>
@@ -44,7 +42,6 @@ Note: Function Built, adding with AdminTools<br>
 [x] Remove Campaigns<br> 
 [x] A Single Product can have multiple Campaigns<br>
 [x] Campaign Price is the price that shows and ends up on receipt<br>
-Note: Functionality built, just need to imlement<br>
 </p>
 ### TODO! <br>
 [-] JSON Serialize Receipts, scrapped<br>

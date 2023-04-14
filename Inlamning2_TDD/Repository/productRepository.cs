@@ -75,14 +75,14 @@ namespace Inlamning2_TDD.Repository
 
                 if (i[4] == "PricePerKilogram") i[4] = "1";
                 if (i[4] == "PricePer") i[4] = "0";
-                ProductModel x = new ProductModel(
+                ProductModel newProduct = new (
                         Convert.ToInt32(i[0]),
                         i[1],
                         Convert.ToInt32(i[2]),
                         Convert.ToDouble(i[3]),
                         Convert.ToInt32(i[4])
                     );
-                products.Add(x);
+                products.Add(newProduct);
             }
 
             return products;

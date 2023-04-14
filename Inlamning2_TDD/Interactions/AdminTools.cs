@@ -44,13 +44,11 @@ internal class AdminTools
                     break;
                 case ConsoleKey.D4:
                 case ConsoleKey.NumPad4:
-                    // TODO: FINISH THIS
                     var campID = Interactions.GetCampaignID();
                     campaignRepository.EditCampaign(campID);
                     break;
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
-                    // TODO: FINISH THIS
                     var caID = Interactions.GetCampaignID();
                     campaignRepository.DeleteCampaign(caID);
                     break;
