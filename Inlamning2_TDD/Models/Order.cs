@@ -1,6 +1,4 @@
 ﻿using Inlamning2_TDD.Repository;
-using System.Security.Cryptography.X509Certificates;
-using Inlamning2_TDD.Interface;
 
 public class Order
 {
@@ -46,7 +44,7 @@ public class Order
         if (lines.Exists(x => x.ProductId == id))
         {
             var line = lines.First(x => x.ProductId == id);
-            line.AddProductAmoutn(item2);
+            line.AddProductAmount(item2);
         }
         else
             lines.Add(new OrderLine(id, item2, productRepository));
@@ -68,7 +66,9 @@ public class Order
         ReceiptLines.Add($"=========\n" +
             $"Total: {order.sum} SEK\n" +
             "Thank your for your Purchase, come again!\n");
-        UpdateReceiptFile(ReceiptLines);
+        UpdateReceiptFile(ReceiptLines); 
+        Interactions.PrintOrderRows(order);
+        Thread.Sleep(2000);
         return;
     }
 

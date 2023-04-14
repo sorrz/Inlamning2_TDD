@@ -26,7 +26,7 @@ internal class Interactions
 
     internal static void PrintOrderRows(Order order)
     {
-        Console.WriteLine($"KVITO {order.OrderId}  {order.ReceiptDate}"); 
+        Console.WriteLine($"KVITTO {order.OrderId}  {order.ReceiptDate}"); 
         double sum = 0;
         sum = order.GetTotalPrice();
         foreach (var row in order.lines) Console.WriteLine($"{row.ProductName} {row.Amount} * {row.GetSingleCost(row.ProductId)} = {row.Cost}");
@@ -36,6 +36,8 @@ internal class Interactions
     public static List<string> GetCampaignInput()
     {
         List<string> _list = new();
+        Console.Write("Please Enter the a New Campaign ID: ");
+        _list.Add(Console.ReadLine());
         Console.Write("Please Enter the ProductId to which we wanna apply the Campaign: ");
         _list.Add(Console.ReadLine());
         Console.WriteLine("Please Enter a From Date (YYYY-MM-DD");

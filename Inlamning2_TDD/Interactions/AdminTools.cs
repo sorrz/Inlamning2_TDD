@@ -19,13 +19,13 @@ internal class AdminTools
         Console.Clear();
         while (true)
         {
+            Console.Clear();
             Console.WriteLine($"1. Lägg till Produkt\n" +
                               $"2. Ändra på Produkt\n" +
                               $"3. Lägg till Kampanj\n" +
                               $"4. Ändra på Kampanj\n" +
                               $"5. Ta Bort en Kampanj\n" +
                               $"6. Gå Tillbaka...");
-            // return Console.ReadKey();
             switch (Console.ReadKey(true).Key)
             {
                 case ConsoleKey.D1:
@@ -49,7 +49,8 @@ internal class AdminTools
                     break;
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
-                    campaignRepository.DeleteCampaign();
+                    var caID = Interactions.GetCampaignID();
+                    campaignRepository.DeleteCampaign(caID);
                     break;
                 case ConsoleKey.D6:
                 case ConsoleKey.NumPad6:

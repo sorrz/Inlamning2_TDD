@@ -8,10 +8,7 @@ namespace Inlamning2_TDD.Repository
         private readonly string filePath = "hejsan.txt";
         private List<ProductModel> _products;
 
-        public ProductRepository()
-        {
-            _products = GetProducts();
-        }
+        public ProductRepository() => _products = GetProducts();
 
         public Task AddProduct(ProductModel product)
         {
@@ -44,7 +41,6 @@ namespace Inlamning2_TDD.Repository
             {
                 if (prod.Id == id) return prod;
             }
-
             return null;
         }
 
@@ -55,23 +51,20 @@ namespace Inlamning2_TDD.Repository
             return products;
         }
 
-        public Task UpdateProduct(ProductModel product)
+        public Task UpdateProduct(int id)
         {
-            if (!DoesProductexist(product)) _products.Add(product);
-            else
-            {
-                GetProductById(product.Id)
-                    .UpdateProductInfo(product.Name, product.Count, product.BasePrice);
-            }
-
+            var prod = GetProductById(id);
+            var parameters = Interactions.GetUpdateParams();
+            var newName = parameters[0];
+            var newCount = Convert.ToInt32(parameters[1]);
+            var newPrice = Convert.ToDouble(parameters[2]);
+            prod.UpdateProductInfo(newName, newCount, newPrice);
             SaveProductList();
             return Task.CompletedTask;
         }
 
-        public string SerializeProduct(ProductModel product)
-        {
-            return $"{product.Id},{product.Name},{product.Count},{product.BasePrice},{product.PriceType}";
-        }
+        public string SerializeProduct(ProductModel product) => $"{product.Id},{product.Name},{product.Count},{product.BasePrice},{product.PriceType}";
+        
 
         public List<ProductModel> DeserializeProductList(List<string> _list)
         {
@@ -79,22 +72,23 @@ namespace Inlamning2_TDD.Repository
             foreach (var line in _list)
             {
                 string[] i = line.Split(',');
-                ProductModel x = new ProductModel(
-                    Convert.ToInt32(i[0]),
-                    i[1],
-                    Convert.ToInt32(i[2]),
-                    Convert.ToDouble(i[3]),
-                    Convert.ToInt32(i[4])
-                );
-                products.Add(x);
+
+                if (i[4] == "PricePerKilogram") i[4] = "1";
+                if (i[4] == "PricePer") i[4] = "0";
+                ProductModel newProduct = new (
+                        Convert.ToInt32(i[0]),
+                        i[1],
+                        Convert.ToInt32(i[2]),
+                        Convert.ToDouble(i[3]),
+                        Convert.ToInt32(i[4])
+                    );
+                products.Add(newProduct);
             }
 
             return products;
         }
 
-        private bool DoesProductexist(ProductModel product)
-        {
-            return _products.Exists(p => p.Id == product.Id);
-        }
+        private bool DoesProductexist(ProductModel product) => _products.Exists(p => p.Id == product.Id);
+       
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Inlamning2_TDD.Interface;
-using Inlamning2_TDD.Models;
 using Inlamning2_TDD.Repository;
 
 public class OrderLine
@@ -21,31 +20,18 @@ public class OrderLine
         PricePer = GetSingleCost(id);
         ProductName = GetProductName(id);
         Amount = amount;
-        
     }
 
-
-    public void AddProductAmoutn(int amount)
-    {
-        Amount += amount;
-    }
-
-    private string? GetProductName(int id)
-    {
-        return productRepository.GetProductById(id).Name;
-    }
-
+    public void AddProductAmount(int amount) => Amount += amount;
+    
+    private string? GetProductName(int id) => productRepository.GetProductById(id).Name;
     private int GetProducId(int id)
     {
-        var newId = productRepository.GetProductById(id).Id; // TODO Fixa Objekt Instace Fel
+        var newId = productRepository.GetProductById(id).Id;
         return newId;
     }
 
-    public double GetSingleCost(int id)
-    {
-        return productRepository.GetProductById(id).BasePrice;
-
-    }
+    public double GetSingleCost(int id) => productRepository.GetProductById(id).GetCampaignPrice();
 
     public double GetCostofLine(int id, int amount) 
     {

@@ -1,7 +1,5 @@
 ﻿using Inlamning2_TDD.Models;
 using Inlamning2_TDD.Repository;
-using System.Reflection.Metadata.Ecma335;
-using Inlamning2_TDD.Interface;
 
 public class CashRegister
 {
@@ -27,7 +25,6 @@ public class CashRegister
     {
         while (true)
         {
-            
             var userCommand = Interactions.OrderPrompt();
             var validatedCommand = ValidateCommand(userCommand);
             if (validatedCommand != ErrorMessageEnum.Ok)
@@ -58,7 +55,7 @@ public class CashRegister
     {
         if (userCommand.ToLower() == "pay") 
         {
-            order.Pay(order);   // TODO: Fix the PAY FUNCTION! 
+            order.Pay(order);
             Start();
         }
         userCommandArray = userCommand.Split(' ');
